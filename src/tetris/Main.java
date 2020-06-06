@@ -9,6 +9,7 @@ public class Main extends Application {
     @Override
     public void start (Stage stage) {
         stage.setTitle("Tetris");
+        stage.setResizable(false);
         TetrisApp app = new TetrisApp(stage);
         app.start();
     }

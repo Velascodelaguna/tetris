@@ -1,6 +1,6 @@
 package tetris;
 
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.*;
 
 public class PlayFieldView {
 
@@ -8,6 +8,11 @@ public class PlayFieldView {
 
     public PlayFieldView() {
         pane = new AnchorPane();
+
+        pane.setMaxHeight(800);
+        pane.setMinWidth(400);
+
+        pane.setStyle("-fx-border-color: blue");
     }
 
     public AnchorPane getView() {

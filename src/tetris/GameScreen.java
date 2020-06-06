@@ -1,8 +1,9 @@
 package tetris;
 
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 
 public class GameScreen {
 
@@ -11,12 +12,12 @@ public class GameScreen {
 
     public GameScreen(TetrisAppControl app, int width, int height) {
 
-        var pane = new BorderPane();
+        var gameLayout = new HBox();
+        gameLayout.setAlignment(Pos.CENTER);
         PlayFieldView playFieldView = new PlayFieldView();
         SidePanelView sidePanelView = new SidePanelView(app);
-        pane.setLeft(playFieldView.getView());
-        pane.setRight(sidePanelView.getView());
-        scene = new Scene(pane, width, height);
+        gameLayout.getChildren().addAll(playFieldView.getView(), sidePanelView.getView());
+        scene = new Scene(gameLayout, width, height);
     }
 
     public Scene getScene() {
