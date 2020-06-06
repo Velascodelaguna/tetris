@@ -7,11 +7,15 @@ public class TetrisAppControl {
         this.app = app;
     }
 
-    public void setStartScene() {
+    public void setStartScreen() {
         this.app.setStartScreen();
     }
 
     public void setGameScreen() {
         this.app.setGameScreen();
+    }
+
+    public void endGame() {
+        this.app.endGame();
     }
 }

@@ -1,5 +1,6 @@
 package tetris;
 
+import javafx.application.Platform;
 import javafx.stage.Stage;
 
 public class TetrisApp {
@@ -31,5 +32,6 @@ public class TetrisApp {
 
     public void endGame() {
         this.stage.close();
+        Platform.exit();
     }
 }

@@ -12,12 +12,16 @@ public class GameScreen {
     public GameScreen(TetrisAppControl app, int width, int height) {
 
         var pane = new BorderPane();
-        var lbl = new Label("TEST GAME");
-        pane.setLeft(lbl);
+        PlayFieldView playFieldView = new PlayFieldView();
+        SidePanelView sidePanelView = new SidePanelView(app);
+        pane.setLeft(playFieldView.getView());
+        pane.setRight(sidePanelView.getView());
         scene = new Scene(pane, width, height);
     }
 
     public Scene getScene() {
         return this.scene;
     }
+
+
 }
