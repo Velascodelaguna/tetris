@@ -4,29 +4,38 @@ import javafx.animation.AnimationTimer;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.layout.HBox;
+import tetris.tetromino.TetrominoHandler;
 
 public class GameScreen {
 
 
     private final Scene scene;
     private PlayFieldView playFieldView;
+    private PlayFieldControl playFieldControl;
     private SidePanelView sidePanelView;
+    private TetrominoHandler tetrominoHandler;
     private long startTime;
 
     public GameScreen(TetrisAppControl app, int width, int height) {
 
         var gameLayout = new HBox();
-        gameLayout.setAlignment(Pos.CENTER);
-        playFieldView = new PlayFieldView();
-        sidePanelView = new SidePanelView(app);
-        gameLayout.getChildren().addAll(playFieldView.getView(), sidePanelView.getView());
         scene = new Scene(gameLayout, width, height);
+        gameLayout.setAlignment(Pos.CENTER);
+        tetrominoHandler = new TetrominoHandler();
+        playFieldView = new PlayFieldView(tetrominoHandler);
+        sidePanelView = new SidePanelView(app);
+        playFieldControl = new PlayFieldControl(new InputHandler(scene), tetrominoHandler);
+        gameLayout.getChildren().addAll(playFieldView.getView(), sidePanelView.getView());
+        initializeGame();
     }
 
     public Scene getScene() {
         return this.scene;
     }
 
+    private void initializeGame() {
+        tetrominoHandler.initialize();
+    }
 
     public void gameLoopStart() {
         startTime = System.nanoTime();
@@ -40,8 +49,10 @@ public class GameScreen {
 
     private void gameLoop(long now) {
         // update every 1 second
-        if (now - startTime > 1000000000) {
+        if (now - startTime > 1_000_000_000) {
             startTime = now;
+
+            playFieldControl.update();
             playFieldView.update();
         }
     }

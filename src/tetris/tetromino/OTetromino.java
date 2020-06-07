@@ -54,7 +54,7 @@ public class OTetromino extends Tetromino {
             Rectangle square = squares[i];
             square.setX(newPosition.getX());
             square.setY(newPosition.getY());
-            if (i%2 == 1) {
+            if (i % 2 == 1) {
                 double newX = newPosition.getX() + this.PIXEL_SIZE;
                 square.setX(newX);
             }

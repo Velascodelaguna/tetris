@@ -5,8 +5,8 @@ import javafx.stage.Stage;
 
 public class TetrisApp {
 
-    public final int HEIGHT = 1000;
-    public final int WIDTH = 800;
+    public final int HEIGHT = 900;
+    public final int WIDTH = 700;
     private final Stage stage;
     private final TetrisAppControl control;
 

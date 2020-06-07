@@ -18,6 +18,7 @@ public abstract class Tetromino {
 
     abstract protected void initializeSquares();
     abstract protected void update(Point2D newPosition);
+    abstract public Group getSquares();
 
     public int[][] rotateClockwise() {
         if (this.type == TetrominoType.O) return this.orientation;
@@ -54,7 +55,7 @@ public abstract class Tetromino {
     }
 
     public void moveLeft() {
-        position = position.add(-this.PIXEL_SIZE, 0);
+        position = position.add(-1*this.PIXEL_SIZE, 0);
         this.update(position);
     }
 

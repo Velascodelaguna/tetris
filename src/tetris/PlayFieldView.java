@@ -1,21 +1,25 @@
 package tetris;
 
-import javafx.scene.layout.*;
-import tetris.tetromino.OTetromino;
+import javafx.collections.ObservableList;
+import javafx.scene.Group;
+import javafx.scene.Node;
+import javafx.scene.layout.AnchorPane;
+import tetris.tetromino.Tetromino;
+import tetris.tetromino.TetrominoHandler;
 
 public class PlayFieldView {
 
     private final AnchorPane pane;
-    private OTetromino ot;
-    public PlayFieldView() {
-        pane = new AnchorPane();
+    private final TetrominoHandler tetrominoHandler;
 
+    public PlayFieldView(TetrominoHandler tetrominoHandler) {
+        pane = new AnchorPane();
+        pane.requestFocus();
         pane.setMaxHeight(800);
         pane.setMinWidth(400);
 
         pane.setStyle("-fx-border-color: blue");
-        ot = new OTetromino();
-        pane.getChildren().add(ot.getSquares());
+        this.tetrominoHandler = tetrominoHandler;
     }
 
     public AnchorPane getView() {
@@ -23,7 +27,16 @@ public class PlayFieldView {
     }
 
     public void update() {
-        ot.moveDown();
-
+        for (Tetromino tetromino: tetrominoHandler.getTetrominoes()) {
+            if (tetromino != null && this.pane != null) {
+                ObservableList<Node> paneChildren = this.pane.getChildren();
+                Group squares = tetromino.getSquares();
+                if (!paneChildren.contains(squares)) {
+                    paneChildren.add(tetromino.getSquares());
+                }
+            }
+        }
     }
+
+
 }
