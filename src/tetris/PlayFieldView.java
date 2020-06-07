@@ -26,19 +26,24 @@ public class PlayFieldView {
         return pane;
     }
 
+    public void initialize() {
+        addTetrominoToPane(tetrominoHandler.getActiveTetromino());
+    }
+
     public void update() {
         for (Tetromino tetromino: tetrominoHandler.getTetrominoes()) {
             if (tetromino != null && this.pane != null) {
-                ObservableList<Node> paneChildren = this.pane.getChildren();
-                Group squares = tetromino.getSquares();
-                if (!paneChildren.contains(squares)) {
-                    paneChildren.add(tetromino.getSquares());
-                }
-
+                addTetrominoToPane(tetromino);
                 tetromino.moveDown();
             }
         }
     }
 
-
+    private void addTetrominoToPane(Tetromino tetromino) {
+        ObservableList<Node> paneChildren = this.pane.getChildren();
+        Group squares = tetromino.getSquares();
+        if (!paneChildren.contains(squares)) {
+            paneChildren.add(tetromino.getSquares());
+        }
+    }
 }

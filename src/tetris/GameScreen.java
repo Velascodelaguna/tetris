@@ -36,9 +36,9 @@ public class GameScreen {
     private void initializeGame() {
         tetrominoHandler.initialize();
 
-        // call update on initialize so when the game
+        // call on initialize so when the game
         // starts the tetris block is already created
-        playFieldView.update();
+        playFieldView.initialize();
     }
 
     public void gameLoopStart() {
