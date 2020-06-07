@@ -10,10 +10,10 @@ public class GameScreen {
 
 
     private final Scene scene;
-    private PlayFieldView playFieldView;
-    private PlayFieldControl playFieldControl;
-    private SidePanelView sidePanelView;
-    private TetrominoHandler tetrominoHandler;
+    private final PlayFieldView playFieldView;
+    private final PlayFieldControl playFieldControl;
+    private final SidePanelView sidePanelView;
+    private final TetrominoHandler tetrominoHandler;
     private long startTime;
 
     public GameScreen(TetrisAppControl app, int width, int height) {
@@ -35,6 +35,10 @@ public class GameScreen {
 
     private void initializeGame() {
         tetrominoHandler.initialize();
+
+        // call update on initialize so when the game
+        // starts the tetris block is already created
+        playFieldView.update();
     }
 
     public void gameLoopStart() {
@@ -51,9 +55,9 @@ public class GameScreen {
         // update every 1 second
         if (now - startTime > 1_000_000_000) {
             startTime = now;
-
             playFieldControl.update();
             playFieldView.update();
+
         }
     }
 

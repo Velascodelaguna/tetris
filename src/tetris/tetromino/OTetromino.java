@@ -40,28 +40,22 @@ public class OTetromino extends Tetromino {
             square.setWidth(this.PIXEL_SIZE);
             square.setHeight(this.PIXEL_SIZE);
 
-            squares[i] = square;
-            group.getChildren().add(square);
-        });
-
-        // align the squares so that they form the O-tetromino
-        update(this.position);
-    }
-
-    public void update(Point2D newPosition) {
-
-        IntStream.range(0, 4).forEach(i -> {
-            Rectangle square = squares[i];
-            square.setX(newPosition.getX());
-            square.setY(newPosition.getY());
+            // align the squares so that they form the O-tetromino
+            square.setX(this.position.getX());
+            square.setY(this.position.getY());
             if (i % 2 == 1) {
-                double newX = newPosition.getX() + this.PIXEL_SIZE;
+                double newX = this.position.getX() + this.PIXEL_SIZE;
                 square.setX(newX);
             }
             if (i >= 2) {
-                double newY = newPosition.getY() + this.PIXEL_SIZE;
+                double newY = this.position.getY() + this.PIXEL_SIZE;
                 square.setY(newY);
             }
+
+            squares[i] = square;
+            group.getChildren().add(square);
         });
     }
+
+
 }

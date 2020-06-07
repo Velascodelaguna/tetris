@@ -17,7 +17,6 @@ public abstract class Tetromino {
     protected Rectangle[] squares = new Rectangle[BLOCK_SIZE];
 
     abstract protected void initializeSquares();
-    abstract protected void update(Point2D newPosition);
     abstract public Group getSquares();
 
     public int[][] rotateClockwise() {
@@ -46,18 +45,27 @@ public abstract class Tetromino {
 
     public void moveDown() {
         position = position.add(0, this.PIXEL_SIZE);
-        this.update(position);
+        this.update(0, this.PIXEL_SIZE);
     }
 
     public void moveRight() {
         position = position.add(this.PIXEL_SIZE, 0);
-        this.update(position);
+        this.update(this.PIXEL_SIZE, 0);
     }
 
     public void moveLeft() {
         position = position.add(-1*this.PIXEL_SIZE, 0);
-        this.update(position);
+        this.update(-1*this.PIXEL_SIZE, 0);
     }
 
+    public void update(double dx, double dy) {
+        for (Rectangle square: squares) {
+            double newX = square.getX() + dx;
+            square.setX(newX);
+
+            double newY = square.getY() + dy;
+            square.setY(newY);
+        }
+    }
 
 }

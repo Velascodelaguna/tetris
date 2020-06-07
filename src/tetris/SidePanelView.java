@@ -14,6 +14,7 @@ public class SidePanelView {
     public SidePanelView(TetrisAppControl appControl) {
         sidePanelControl = new SidePanelControl(appControl);
         vbox = new VBox();
+        vbox.setFocusTraversable(false);
         addLabels();
         addButtons();
 
@@ -39,12 +40,14 @@ public class SidePanelView {
     private Button getRestartButton() {
         Button button = new Button("Restart");
         button.setOnAction((event) -> this.sidePanelControl.restart());
+        button.setFocusTraversable(false);
         return button;
     }
 
     private Button getQuitButton() {
         Button button = new Button("Quit");
         button.setOnAction((event) -> this.sidePanelControl.quit());
+        button.setFocusTraversable(false);
         return button;
     }
 

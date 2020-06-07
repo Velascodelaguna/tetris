@@ -19,8 +19,9 @@ public class PlayFieldControl {
         KeyCode keyPressed = inputHandler.getKeyPressed();
         switch (keyPressed) {
             case LEFT: currentActive.moveLeft();
+                       break;
             case RIGHT: currentActive.moveRight();
-            case DOWN: currentActive.moveDown();
+                        break;
             default: currentActive.moveDown();
         }
 
