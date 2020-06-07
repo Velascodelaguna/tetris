@@ -1,15 +1,23 @@
 package tetris.tetromino;
 
 import javafx.geometry.Point2D;
+import javafx.scene.Group;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 
 public abstract class Tetromino {
     private final int BLOCK_SIZE = 4;
     protected final int PIXEL_SIZE = 40;
     protected TetrominoType type;
     protected Color color;
-    protected int[][] orientation = new int[BLOCK_SIZE][BLOCK_SIZE];
+    protected Color borderColor = Color.DARKGRAY;
+    protected Group group;
     protected Point2D position;
+    protected int[][] orientation = new int[BLOCK_SIZE][BLOCK_SIZE];
+    protected Rectangle[] squares = new Rectangle[BLOCK_SIZE];
+
+    abstract protected void initializeSquares();
+    abstract protected void update(Point2D newPosition);
 
     public int[][] rotateClockwise() {
         if (this.type == TetrominoType.O) return this.orientation;
@@ -36,14 +44,19 @@ public abstract class Tetromino {
     }
 
     public void moveDown() {
-        position.add(0, this.PIXEL_SIZE);
+        position = position.add(0, this.PIXEL_SIZE);
+        this.update(position);
     }
 
     public void moveRight() {
-        position.add(this.PIXEL_SIZE, 0);
+        position = position.add(this.PIXEL_SIZE, 0);
+        this.update(position);
     }
 
     public void moveLeft() {
-        position.add(-this.PIXEL_SIZE, 0);
+        position = position.add(-this.PIXEL_SIZE, 0);
+        this.update(position);
     }
+
+
 }

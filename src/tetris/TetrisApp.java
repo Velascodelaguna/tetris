@@ -7,7 +7,7 @@ public class TetrisApp {
 
     public final int HEIGHT = 1000;
     public final int WIDTH = 800;
-    private Stage stage;
+    private final Stage stage;
     private final TetrisAppControl control;
 
     public TetrisApp(Stage stage) {
@@ -28,6 +28,7 @@ public class TetrisApp {
     public void setGameScreen() {
         GameScreen game = new GameScreen(this.control, WIDTH, HEIGHT);
         stage.setScene(game.getScene());
+        game.gameLoopStart();
     }
 
     public void endGame() {
