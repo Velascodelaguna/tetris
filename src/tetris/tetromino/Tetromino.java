@@ -7,17 +7,18 @@ import javafx.scene.shape.Rectangle;
 
 public abstract class Tetromino {
     private final int BLOCK_SIZE = 4;
-    protected final int PIXEL_SIZE = 40;
+    public static final int PIXEL_SIZE = 40;
     protected TetrominoType type;
     protected Color color;
     protected Color borderColor = Color.DARKGRAY;
     protected Group group;
     protected Point2D position;
+    protected boolean isActive = true;
     protected int[][] orientation = new int[BLOCK_SIZE][BLOCK_SIZE];
     protected Rectangle[] squares = new Rectangle[BLOCK_SIZE];
 
     abstract protected void initializeSquares();
-    abstract public Group getSquares();
+    abstract public Group getGroup();
 
     public int[][] rotateClockwise() {
         if (this.type == TetrominoType.O) return this.orientation;
@@ -59,13 +60,15 @@ public abstract class Tetromino {
     }
 
     public void update(double dx, double dy) {
-        for (Rectangle square: squares) {
-            double newX = square.getX() + dx;
-            square.setX(newX);
-
-            double newY = square.getY() + dy;
-            square.setY(newY);
-        }
+        group.setLayoutX(group.getLayoutX() + dx);
+        group.setLayoutY(group.getLayoutY() + dy);
     }
 
+    public boolean isActive() {
+        return this.isActive;
+    }
+
+    public void setActive(boolean state) {
+        this.isActive = state;
+    }
 }

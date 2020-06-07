@@ -15,7 +15,7 @@ public class OTetromino extends Tetromino {
         this.group = new Group();
 
         // start at the middle columns of the play field
-        this.position = new Point2D(this.PIXEL_SIZE*4, 0);
+        this.position = new Point2D(PIXEL_SIZE*4, 0);
 
         this.orientation = new int[][] {
             {0, 0, 0, 0},
@@ -28,7 +28,7 @@ public class OTetromino extends Tetromino {
 
     }
 
-    public Group getSquares() {
+    public Group getGroup() {
         return this.group;
     }
 
@@ -37,18 +37,18 @@ public class OTetromino extends Tetromino {
             Rectangle square = new Rectangle();
             square.setFill(this.color);
             square.setStroke(this.borderColor);
-            square.setWidth(this.PIXEL_SIZE);
-            square.setHeight(this.PIXEL_SIZE);
+            square.setWidth(PIXEL_SIZE);
+            square.setHeight(PIXEL_SIZE);
 
             // align the squares so that they form the O-tetromino
             square.setX(this.position.getX());
             square.setY(this.position.getY());
             if (i % 2 == 1) {
-                double newX = this.position.getX() + this.PIXEL_SIZE;
+                double newX = this.position.getX() + PIXEL_SIZE;
                 square.setX(newX);
             }
             if (i >= 2) {
-                double newY = this.position.getY() + this.PIXEL_SIZE;
+                double newY = this.position.getY() + PIXEL_SIZE;
                 square.setY(newY);
             }
 

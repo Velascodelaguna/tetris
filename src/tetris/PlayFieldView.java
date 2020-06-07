@@ -41,9 +41,9 @@ public class PlayFieldView {
 
     private void addTetrominoToPane(Tetromino tetromino) {
         ObservableList<Node> paneChildren = this.pane.getChildren();
-        Group squares = tetromino.getSquares();
+        Group squares = tetromino.getGroup();
         if (!paneChildren.contains(squares)) {
-            paneChildren.add(tetromino.getSquares());
+            paneChildren.add(tetromino.getGroup());
         }
     }
 }
