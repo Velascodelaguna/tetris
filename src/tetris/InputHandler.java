@@ -4,21 +4,17 @@ import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
-import java.util.LinkedList;
-import java.util.Queue;
-
 public class InputHandler {
 
-    private Queue<KeyCode> pressedKeys;
+    private KeyCode pressedKey;
     public InputHandler(Scene scene) {
-        pressedKeys = new LinkedList<>();
+        this.pressedKey = KeyCode.UNDEFINED;
         addKeyListeners(scene);
     }
 
     public KeyCode getKeyPressed() {
-        KeyCode keyPressed = pressedKeys.poll();
-        if (keyPressed != null) {
-            return keyPressed;
+        if (this.pressedKey != null) {
+            return this.pressedKey;
         } else {
             return KeyCode.UNDEFINED;
         }
@@ -36,9 +32,16 @@ public class InputHandler {
             } else if (event.getCode() == KeyCode.SPACE) {
                 currentKeyPressed = KeyCode.SPACE;
             }
-            pressedKeys.offer(currentKeyPressed);
+            this.pressedKey = currentKeyPressed;
+        });
+
+        scene.addEventHandler(KeyEvent.KEY_RELEASED, (event) -> {
+            this.pressedKey = KeyCode.UNDEFINED;
         });
     }
 
+    public void resetKeyPressed() {
+        this.pressedKey = KeyCode.UNDEFINED;
+    }
 
 }

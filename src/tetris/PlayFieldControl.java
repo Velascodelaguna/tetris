@@ -22,8 +22,10 @@ public class PlayFieldControl {
                        break;
             case RIGHT: currentActive.moveRight();
                         break;
-            default: currentActive.moveDown();
+            case DOWN: currentActive.moveDown();
+                       break;
         }
 
+        inputHandler.resetKeyPressed();
     }
 }

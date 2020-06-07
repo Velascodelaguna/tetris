@@ -52,12 +52,12 @@ public class GameScreen {
     }
 
     private void gameLoop(long now) {
+        playFieldControl.update();
+
         // update every 1 second
         if (now - startTime > 1_000_000_000) {
             startTime = now;
-            playFieldControl.update();
             playFieldView.update();
-
         }
     }
 

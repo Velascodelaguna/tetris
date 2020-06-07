@@ -34,6 +34,8 @@ public class PlayFieldView {
                 if (!paneChildren.contains(squares)) {
                     paneChildren.add(tetromino.getSquares());
                 }
+
+                tetromino.moveDown();
             }
         }
     }
