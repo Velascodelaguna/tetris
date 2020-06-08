@@ -17,8 +17,9 @@ public class PlayFieldView {
         pane.requestFocus();
         pane.setMaxHeight(800);
         pane.setMinWidth(400);
+        pane.setMaxWidth(400);
 
-        pane.setStyle("-fx-border-color: blue");
+        pane.setStyle("-fx-border-color: brown");
         this.tetrominoHandler = tetrominoHandler;
     }
 

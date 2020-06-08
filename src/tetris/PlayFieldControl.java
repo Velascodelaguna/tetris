@@ -20,7 +20,6 @@ public class PlayFieldControl {
 
     public void update(Duration delta) {
         Tetromino currentActive = this.tetrominoHandler.getActiveTetromino();
-        grid.update(delta, currentActive);
         KeyCode keyPressed = inputHandler.getKeyPressed();
         switch (keyPressed) {
             case LEFT -> this.moveLeft(currentActive);
@@ -29,6 +28,14 @@ public class PlayFieldControl {
         }
 
         inputHandler.resetKeyPressed();
+    }
+
+    public void updateGrid() {
+
+        this.grid.update(this.tetrominoHandler.getActiveTetromino());
+        if (this.grid.hasStopped()) {
+            tetrominoHandler.addNewBlock();
+        }
     }
 
     public void moveActiveTetrominoDown() {
@@ -53,5 +60,4 @@ public class PlayFieldControl {
             tetromino.moveDown();
         }
     }
-
 }

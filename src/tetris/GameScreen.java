@@ -57,11 +57,12 @@ public class GameScreen {
         Duration delta = Duration.between(this.deltaTime, Instant.now());
         playFieldControl.update(delta);
 
-        // update every 1 second
-        long MILLISEC_IN_SEC = 1000;
+        // update every millisecond
+        long MILLISEC_IN_SEC = 700;
         if (delta.toMillis() > MILLISEC_IN_SEC) {
             playFieldControl.moveActiveTetrominoDown();
             playFieldView.update();
+            playFieldControl.updateGrid();
             deltaTime = Instant.now();
         }
     }

@@ -28,4 +28,9 @@ public class TetrominoHandler {
     public Tetromino getActiveTetromino() {
         return this.activeTetromino;
     }
+
+    public void addNewBlock() {
+        activeTetromino.setActive(false);
+        addTetromino(new JTetromino());
+    }
 }

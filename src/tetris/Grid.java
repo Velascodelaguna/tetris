@@ -3,8 +3,7 @@ package tetris;
 import tetris.tetromino.Tetromino;
 
 import javafx.geometry.Point2D;
-
-import java.time.Duration;
+import tetris.tetromino.TetrominoType;
 import java.util.Arrays;
 
 // each position occupies a place in the grid
@@ -20,17 +19,58 @@ public class Grid {
             this.row = row;
             this.col = col;
         }
+
+        public boolean equals(GridPosition other) {
+            return other != null && this.row == other.row && this.col == other.col;
+        }
+
+        public String toString() {
+            return "Row: " + row + " Col: " + col;
+        }
     }
 
     int[][] grid;
-    private Duration delta;
+    private GridPosition[] previousPosition;
+    private boolean hasActiveTetrominoStopped = false;
     public Grid() {
         this.grid = new int[20][10];
-        this.delta = Duration.ZERO;
     }
 
-    public void update(Duration delta, Tetromino tetromino) {
+    public void update(Tetromino tetromino) {
+        if (this.previousPosition == null) {
+            this.previousPosition = getGridPositions(tetromino.getSquarePositions());
+            return;
+        }
 
+        GridPosition[] positions = getGridPositions(tetromino.getSquarePositions());
+
+        if (hasStopped(positions)) {
+            updateGridValues(positions, tetromino.getType());
+            this.hasActiveTetrominoStopped = true;
+        } else {
+            this.previousPosition = positions;
+            this.hasActiveTetrominoStopped = false;
+        }
+    }
+
+    public boolean hasStopped() {
+        return this.hasActiveTetrominoStopped;
+    }
+
+    private boolean hasStopped(GridPosition[] currentPosition) {
+        boolean hasStopped = false;
+        for (int i = 0; i < currentPosition.length; i++) {
+            GridPosition current = currentPosition[i];
+            GridPosition previous = this.previousPosition[i];
+            hasStopped |= current.equals(previous);
+        }
+        return hasStopped;
+    }
+
+    private void updateGridValues(GridPosition[] positions, TetrominoType tetrominoType) {
+        for (GridPosition position: positions) {
+            grid[position.row][position.col] = tetrominoType.symbol;
+        }
     }
 
     private GridPosition[] getGridPositions(Point2D[] squarePositions) {
