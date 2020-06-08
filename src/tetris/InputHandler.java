@@ -36,9 +36,8 @@ public class InputHandler {
 
     private void addKeyListeners(Scene scene) {
         scene.addEventHandler(KeyEvent.KEY_PRESSED, (event) -> {
-            KeyCode currentKeyPressed = KeyCode.UNDEFINED;
             if (this.validKeys.contains(event.getCode())) {
-                this.pressedKey = currentKeyPressed;
+                this.pressedKey = event.getCode();
             }
         });
 
