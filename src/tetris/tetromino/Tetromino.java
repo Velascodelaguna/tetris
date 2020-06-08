@@ -5,6 +5,8 @@ import javafx.scene.Group;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
+import java.util.Arrays;
+
 public abstract class Tetromino {
     private final int BLOCK_SIZE = 4;
     public static final int PIXEL_SIZE = 40;
@@ -19,6 +21,20 @@ public abstract class Tetromino {
 
     abstract protected void initializeSquares();
     abstract public Group getGroup();
+
+    public Point2D getPosition() {
+        return this.position;
+    }
+
+    public Point2D[] getSquarePositions() {
+        return Arrays.stream(squares)
+                .map(square -> new Point2D(square.getX(), square.getY()))
+                .toArray(Point2D[]::new);
+    }
+
+    public TetrominoType getType() {
+        return this.type;
+    }
 
     public int[][] rotateClockwise() {
         if (this.type == TetrominoType.O) return this.orientation;
@@ -45,23 +61,25 @@ public abstract class Tetromino {
     }
 
     public void moveDown() {
-        position = position.add(0, this.PIXEL_SIZE);
-        this.update(0, this.PIXEL_SIZE);
+        position = position.add(0, PIXEL_SIZE);
+        this.update(0, PIXEL_SIZE);
     }
 
     public void moveRight() {
-        position = position.add(this.PIXEL_SIZE, 0);
-        this.update(this.PIXEL_SIZE, 0);
+        position = position.add(PIXEL_SIZE, 0);
+        this.update(PIXEL_SIZE, 0);
     }
 
     public void moveLeft() {
-        position = position.add(-1*this.PIXEL_SIZE, 0);
-        this.update(-1*this.PIXEL_SIZE, 0);
+        position = position.add(-1* PIXEL_SIZE, 0);
+        this.update(-1* PIXEL_SIZE, 0);
     }
 
     public void update(double dx, double dy) {
-        group.setLayoutX(group.getLayoutX() + dx);
-        group.setLayoutY(group.getLayoutY() + dy);
+        for (Rectangle square: squares) {
+            square.setX(square.getX() + dx);
+            square.setY(square.getY() + dy);
+        }
     }
 
     public boolean isActive() {

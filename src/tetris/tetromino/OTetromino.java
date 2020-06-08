@@ -55,7 +55,7 @@ public class OTetromino extends Tetromino {
             squares[i] = square;
             group.getChildren().add(square);
         });
-    }
 
+    }
 
 }
