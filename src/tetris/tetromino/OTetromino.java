@@ -28,10 +28,6 @@ public class OTetromino extends Tetromino {
 
     }
 
-    public Group getGroup() {
-        return this.group;
-    }
-
     protected void initializeSquares() {
         IntStream.range(0, 4).forEach(i -> {
             Rectangle square = new Rectangle();

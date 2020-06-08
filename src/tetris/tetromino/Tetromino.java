@@ -20,7 +20,10 @@ public abstract class Tetromino {
     protected Rectangle[] squares = new Rectangle[BLOCK_SIZE];
 
     abstract protected void initializeSquares();
-    abstract public Group getGroup();
+
+    public Group getGroup() {
+        return this.group;
+    }
 
     public Point2D getPosition() {
         return this.position;
