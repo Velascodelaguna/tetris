@@ -23,12 +23,9 @@ public class PlayFieldControl {
         grid.update(delta, currentActive);
         KeyCode keyPressed = inputHandler.getKeyPressed();
         switch (keyPressed) {
-            case LEFT: this.moveLeft(currentActive);
-                       break;
-            case RIGHT: this.moveRight(currentActive);
-                        break;
-            case DOWN: this.moveDown(currentActive);
-                       break;
+            case LEFT -> this.moveLeft(currentActive);
+            case RIGHT -> this.moveRight(currentActive);
+            case DOWN -> this.moveDown(currentActive);
         }
 
         inputHandler.resetKeyPressed();
