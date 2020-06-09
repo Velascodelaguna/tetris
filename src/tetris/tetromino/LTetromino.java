@@ -15,9 +15,9 @@ public class LTetromino extends Tetromino {
         this.group = new Group();
         this.position = new Point2D(PIXEL_SIZE*3, 0);
         this.orientation = new int[][] {
+                {0, 0, 0},
                 {1, 1, 1},
-                {1, 0, 0},
-                {0, 0, 0}
+                {1, 0, 0}
         };
 
         initializeSquares();
