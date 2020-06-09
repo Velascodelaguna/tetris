@@ -13,7 +13,7 @@ public class TetrominoHandler {
     }
 
     public void initialize() {
-        addTetromino(new JTetromino());
+        addTetromino(new TTetromino());
     }
 
     public void addTetromino(Tetromino t) {

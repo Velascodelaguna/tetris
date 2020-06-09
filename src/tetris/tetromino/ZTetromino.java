@@ -7,16 +7,16 @@ import javafx.scene.shape.Rectangle;
 
 import java.util.stream.IntStream;
 
-public class JTetromino extends Tetromino {
+public class ZTetromino extends Tetromino {
 
-    public JTetromino() {
-        this.type = TetrominoType.J;
-        this.color = Color.BLUE;
+    public ZTetromino() {
+        this.type = TetrominoType.Z;
+        this.color = Color.RED;
         this.group = new Group();
         this.position = new Point2D(PIXEL_SIZE*3, 0);
         this.orientation = new int[][] {
-                {1, 1, 1},
-                {0, 0, 1},
+                {1, 1, 0},
+                {0, 1, 1},
                 {0, 0, 0}
         };
 
@@ -31,12 +31,20 @@ public class JTetromino extends Tetromino {
             square.setWidth(PIXEL_SIZE);
             square.setHeight(PIXEL_SIZE);
 
-            if (i < 3) {
-                square.setX(this.position.getX() + PIXEL_SIZE * i);
-                square.setY(this.position.getY());
-            } else {
+            if (i == 0) {
+                square.setX(this.position.getX());
+            }
+
+            if (i == 1 || i == 2) {
+                square.setX(this.position.getX() + PIXEL_SIZE);
+            }
+
+            if (i == 3) {
                 square.setX(this.position.getX() + PIXEL_SIZE * 2);
-                square.setY(this.position.getY() + PIXEL_SIZE);
+            }
+
+            if (i > 1) {
+                square.setY(PIXEL_SIZE);
             }
 
             this.squares[i] = square;

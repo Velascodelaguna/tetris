@@ -7,16 +7,16 @@ import javafx.scene.shape.Rectangle;
 
 import java.util.stream.IntStream;
 
-public class JTetromino extends Tetromino {
+public class LTetromino extends Tetromino {
 
-    public JTetromino() {
-        this.type = TetrominoType.J;
-        this.color = Color.BLUE;
+    public LTetromino() {
+        this.type = TetrominoType.L;
+        this.color = Color.ORANGE;
         this.group = new Group();
         this.position = new Point2D(PIXEL_SIZE*3, 0);
         this.orientation = new int[][] {
                 {1, 1, 1},
-                {0, 0, 1},
+                {1, 0, 0},
                 {0, 0, 0}
         };
 
@@ -35,7 +35,7 @@ public class JTetromino extends Tetromino {
                 square.setX(this.position.getX() + PIXEL_SIZE * i);
                 square.setY(this.position.getY());
             } else {
-                square.setX(this.position.getX() + PIXEL_SIZE * 2);
+                square.setX(this.position.getX() + PIXEL_SIZE);
                 square.setY(this.position.getY() + PIXEL_SIZE);
             }
 
