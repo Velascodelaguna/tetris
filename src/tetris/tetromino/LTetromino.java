@@ -35,7 +35,7 @@ public class LTetromino extends Tetromino {
                 square.setX(this.position.getX() + PIXEL_SIZE * i);
                 square.setY(this.position.getY());
             } else {
-                square.setX(this.position.getX() + PIXEL_SIZE);
+                square.setX(this.position.getX());
                 square.setY(this.position.getY() + PIXEL_SIZE);
             }
 

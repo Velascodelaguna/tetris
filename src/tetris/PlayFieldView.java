@@ -32,10 +32,9 @@ public class PlayFieldView {
     }
 
     public void update() {
-        for (Tetromino tetromino: tetrominoHandler.getTetrominoes()) {
-            if (tetromino != null && this.pane != null) {
-                addTetrominoToPane(tetromino);
-            }
+        Tetromino tetromino = tetrominoHandler.getActiveTetromino();
+        if (tetromino != null && this.pane != null) {
+            addTetrominoToPane(tetromino);
         }
     }
 
