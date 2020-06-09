@@ -55,14 +55,14 @@ public class GameScreen {
 
     private void gameLoop() {
         Duration delta = Duration.between(this.deltaTime, Instant.now());
-        playFieldControl.update(delta);
+        playFieldControl.update();
 
         // update every millisecond
         long MILLISEC_IN_SEC = 700;
         if (delta.toMillis() > MILLISEC_IN_SEC) {
             playFieldControl.moveActiveTetrominoDown();
-            playFieldView.update();
             playFieldControl.updateGrid();
+            playFieldView.update();
             deltaTime = Instant.now();
         }
     }

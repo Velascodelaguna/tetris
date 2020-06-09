@@ -32,14 +32,12 @@ public class PlayFieldControl {
         inputHandler.resetKeyPressed();
     }
 
-    public void updateGrid(Duration delta) {
-        if (delta.toMillis() > 700) {
-            deltaTime = Duration.ZERO;
+    public void updateGrid() {
             this.grid.update(this.tetrominoHandler.getActiveTetromino());
             if (this.grid.hasStopped()) {
                 tetrominoHandler.addNewBlock();
             }
-        }
+
     }
 
     public void moveActiveTetrominoDown() {
