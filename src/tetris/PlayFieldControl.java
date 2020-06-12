@@ -24,9 +24,9 @@ public class PlayFieldControl {
         Tetromino currentActive = this.tetrominoHandler.getActiveTetromino();
         KeyCode keyPressed = inputHandler.getKeyPressed();
         switch (keyPressed) {
-            case LEFT -> this.moveLeft(currentActive);
-            case RIGHT -> this.moveRight(currentActive);
-            case DOWN -> this.moveDown(currentActive);
+            case LEFT, J -> this.moveLeft(currentActive);
+            case RIGHT, L -> this.moveRight(currentActive);
+            case DOWN, K -> this.moveDown(currentActive);
             case X -> this.rotateClockwise(currentActive);
             case Z -> this.rotateCounterClockwise(currentActive);
         }

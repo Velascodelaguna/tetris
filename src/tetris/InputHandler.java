@@ -26,7 +26,12 @@ public class InputHandler {
             KeyCode.DOWN,
             KeyCode.SPACE,
             KeyCode.Z,
-            KeyCode.X
+            KeyCode.X,
+            // alternate keys for up down left right
+            KeyCode.I,
+            KeyCode.J,
+            KeyCode.K,
+            KeyCode.L
         ));
     }
 
