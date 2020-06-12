@@ -58,11 +58,11 @@ public class Grid {
     }
 
     private boolean hasStopped(GridPosition[] currentPosition) {
-        boolean hasStopped = false;
+        boolean hasStopped = true;
         for (int i = 0; i < currentPosition.length; i++) {
             GridPosition current = currentPosition[i];
             GridPosition previous = this.previousPosition[i];
-            hasStopped |= current.equals(previous);
+            hasStopped &= current.equals(previous);
         }
         return hasStopped;
     }
@@ -112,6 +112,25 @@ public class Grid {
             }
         }
         return true;
+    }
+
+    private boolean canRotate(Point2D[] rotationCoord) {
+        for (GridPosition position: getGridPositions(rotationCoord)) {
+            if (!isMoveable(position.row, position.col)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean canRotateClockwise(Tetromino tetromino) {
+        Point2D[] rotationCoord = tetromino.getCoordinatesRotateClockwise();
+        return canRotate(rotationCoord);
+    }
+
+    public boolean canRotateCounterClockwise(Tetromino tetromino) {
+        Point2D[] rotationCoord = tetromino.getCoordinatesRotateCounterClockwise();
+        return canRotate(rotationCoord);
     }
 
     // check the position to see if it is within the boundaries of the game and it is not already occupied

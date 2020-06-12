@@ -3,9 +3,9 @@ package tetris;
 import javafx.scene.input.KeyCode;
 import tetris.tetromino.Tetromino;
 import tetris.tetromino.TetrominoHandler;
+import tetris.tetromino.TetrominoType;
 
 import java.time.Duration;
-import java.time.Instant;
 
 public class PlayFieldControl {
 
@@ -27,6 +27,8 @@ public class PlayFieldControl {
             case LEFT -> this.moveLeft(currentActive);
             case RIGHT -> this.moveRight(currentActive);
             case DOWN -> this.moveDown(currentActive);
+            case X -> this.rotateClockwise(currentActive);
+            case Z -> this.rotateCounterClockwise(currentActive);
         }
 
         inputHandler.resetKeyPressed();
@@ -60,6 +62,22 @@ public class PlayFieldControl {
     private void moveDown(Tetromino tetromino) {
         if (this.grid.canMoveDown(tetromino)) {
             tetromino.moveDown();
+        }
+    }
+
+    private void rotateClockwise(Tetromino tetromino) {
+        if (tetromino.getType() == TetrominoType.O) return;
+
+        if (this.grid.canRotateClockwise(tetromino)) {
+            tetromino.rotate(Tetromino.Rotation.CLOCKWISE);
+        }
+    }
+
+    private void rotateCounterClockwise(Tetromino tetromino) {
+        if (tetromino.getType() == TetrominoType.O) return;
+
+        if (this.grid.canRotateCounterClockwise(tetromino)) {
+            tetromino.rotate(Tetromino.Rotation.COUNTERCLOCKWISE);
         }
     }
 }

@@ -4,7 +4,7 @@ import java.util.*;
 
 public class TetrominoHandler {
 
-    private Queue<Tetromino> tetrominoBatch;
+    private final Queue<Tetromino> tetrominoBatch;
     private Tetromino activeTetromino;
     private int tetrominoCount;
 
@@ -44,7 +44,7 @@ public class TetrominoHandler {
 
     public void addNewBlock() {
         tetrominoCount++;
-        if (tetrominoCount == 7) {
+        if (tetrominoBatch.isEmpty() || tetrominoCount == 7) {
             tetrominoCount = 0;
             generateTetrominoes();
         }

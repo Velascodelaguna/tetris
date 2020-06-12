@@ -5,6 +5,7 @@ import javafx.scene.Group;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
+import java.util.ArrayList;
 import java.util.stream.IntStream;
 
 public class OTetromino extends Tetromino {
@@ -17,12 +18,6 @@ public class OTetromino extends Tetromino {
         // start at the middle columns of the play field
         this.position = new Point2D(PIXEL_SIZE*4, 0);
 
-        this.orientation = new int[][] {
-            {0, 0, 0, 0},
-            {0, 0, 0, 0},
-            {0, 1, 1, 0},
-            {0, 1, 1, 0}
-        };
 
         initializeSquares();
 
@@ -52,6 +47,11 @@ public class OTetromino extends Tetromino {
             group.getChildren().add(square);
         });
 
+    }
+
+    @Override
+    protected void initializeRotationCoordinates() {
+        rotationList = new ArrayList<>();
     }
 
 }

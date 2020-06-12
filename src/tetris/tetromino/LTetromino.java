@@ -5,6 +5,7 @@ import javafx.scene.Group;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
+import java.util.ArrayList;
 import java.util.stream.IntStream;
 
 public class LTetromino extends Tetromino {
@@ -14,13 +15,9 @@ public class LTetromino extends Tetromino {
         this.color = Color.ORANGE;
         this.group = new Group();
         this.position = new Point2D(PIXEL_SIZE*3, 0);
-        this.orientation = new int[][] {
-                {0, 0, 0},
-                {1, 1, 1},
-                {1, 0, 0}
-        };
 
         initializeSquares();
+        initializeRotationCoordinates();
     }
 
     protected void initializeSquares() {
@@ -43,4 +40,43 @@ public class LTetromino extends Tetromino {
             group.getChildren().add(square);
         });
     }
+
+    @Override
+    protected void initializeRotationCoordinates() {
+
+        BlockMover[]  movers1 = new BlockMover[] {
+                new BlockMover(1, -1),
+                BlockMover.noMove(),
+                new BlockMover(-1, 1),
+                new BlockMover(0, -2)
+        };
+
+        BlockMover[] movers2 = new BlockMover[] {
+                new BlockMover(1, 1),
+                BlockMover.noMove(),
+                new BlockMover(-1, -1),
+                new BlockMover(2, 0)
+        };
+
+        BlockMover[] movers3 = new BlockMover[] {
+                new BlockMover(-1, 1),
+                BlockMover.noMove(),
+                new BlockMover(1, -1),
+                new BlockMover(0, 2)
+        };
+
+        BlockMover[] movers0 = new BlockMover[] {
+                new BlockMover(-1, -1),
+                BlockMover.noMove(),
+                new BlockMover(1, 1),
+                new BlockMover(-2, 0),
+        };
+
+        rotationList = new ArrayList<>(4);
+        rotationList.add(movers0);
+        rotationList.add(movers1);
+        rotationList.add(movers2);
+        rotationList.add(movers3);
+    }
+
 }
