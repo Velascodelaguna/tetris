@@ -1,9 +1,10 @@
 package tetris;
 
+import javafx.scene.shape.Rectangle;
 import tetris.tetromino.Tetromino;
 
 import javafx.geometry.Point2D;
-import tetris.tetromino.TetrominoType;
+
 import java.util.Arrays;
 
 // each position occupies a place in the grid
@@ -29,28 +30,40 @@ public class Grid {
         }
     }
 
-    int[][] grid;
-    private GridPosition[] previousPosition;
+    private class GridSquare extends GridPosition {
+        public final Rectangle square;
+
+        public GridSquare(int row, int col, Rectangle square) {
+            super(row, col);
+            this.square = square;
+        }
+    }
+
+    Rectangle[][] grid;
+    private GridSquare[] previousPosition;
     private boolean hasActiveTetrominoStopped = false;
+
     public Grid() {
-        this.grid = new int[20][10];
+        this.grid = new Rectangle[20][10];
     }
 
     public void update(Tetromino tetromino) {
         if (this.previousPosition == null) {
-            this.previousPosition = getGridPositions(tetromino.getSquarePositions());
+            this.previousPosition = getGridSquares(tetromino.getSquares());
             return;
         }
 
-        GridPosition[] positions = getGridPositions(tetromino.getSquarePositions());
+        GridSquare[] positions = getGridSquares(tetromino.getSquares());
 
         if (hasStopped(positions)) {
-            updateGridValues(positions, tetromino.getType());
+            updateGridValues(positions);
             this.hasActiveTetrominoStopped = true;
         } else {
             this.previousPosition = positions;
             this.hasActiveTetrominoStopped = false;
         }
+
+        clearLines();
     }
 
     public boolean hasStopped() {
@@ -67,14 +80,27 @@ public class Grid {
         return hasStopped;
     }
 
-    private void updateGridValues(GridPosition[] positions, TetrominoType tetrominoType) {
-        for (GridPosition position: positions) {
-            grid[position.row][position.col] = tetrominoType.symbol;
+    private void updateGridValues(GridSquare[] squares) {
+        for (GridSquare square: squares) {
+            grid[square.row][square.col] = square.square;
         }
     }
 
-    private GridPosition[] getGridPositions(Point2D[] squarePositions) {
-        return Arrays.stream(squarePositions)
+    private void clearLines() {
+
+    }
+
+    private GridSquare[] getGridSquares(Rectangle[] squares) {
+        return Arrays.stream(squares)
+                .map(square -> {
+                    int gridRow = (int) (square.getY() / Tetromino.PIXEL_SIZE);
+                    int gridCol = (int) (square.getX() / Tetromino.PIXEL_SIZE);
+                    return new GridSquare(gridRow, gridCol, square);
+                }).toArray(GridSquare[]::new);
+    }
+
+    private GridPosition[] getGridPositions(Point2D[] positions) {
+        return Arrays.stream(positions)
                 .map(square -> {
                     int gridRow = (int) (square.getY() / Tetromino.PIXEL_SIZE);
                     int gridCol = (int) (square.getX() / Tetromino.PIXEL_SIZE);
@@ -83,8 +109,8 @@ public class Grid {
     }
 
     public boolean canMoveLeft(Tetromino tetromino) {
-        GridPosition[] gridPositions = getGridPositions(tetromino.getSquarePositions());
-        for (GridPosition position: gridPositions) {
+        GridPosition[] gridSquares = getGridPositions(tetromino.getSquarePositions());
+        for (GridPosition position: gridSquares) {
             // get the positions if this tetromino moves to the left
             int newCol = position.col - 1;
             if (!isMoveable(position.row, newCol)) {
@@ -135,6 +161,6 @@ public class Grid {
 
     // check the position to see if it is within the boundaries of the game and it is not already occupied
     private boolean isMoveable(int row, int col) {
-        return (row >= 0 && row < 20 && col >= 0 && col < 10 && grid[row][col] == 0);
+        return (row >= 0 && row < 20 && col >= 0 && col < 10 && grid[row][col] == null);
     }
 }

@@ -36,6 +36,10 @@ public abstract class Tetromino {
         return this.position;
     }
 
+    public Rectangle[] getSquares() {
+        return this.squares;
+    }
+
     public Point2D[] getSquarePositions() {
         return Arrays.stream(squares)
                 .map(square -> new Point2D(square.getX(), square.getY()))

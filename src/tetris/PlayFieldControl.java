@@ -5,14 +5,11 @@ import tetris.tetromino.Tetromino;
 import tetris.tetromino.TetrominoHandler;
 import tetris.tetromino.TetrominoType;
 
-import java.time.Duration;
-
 public class PlayFieldControl {
 
     private final InputHandler inputHandler;
     private final TetrominoHandler tetrominoHandler;
     private final Grid grid;
-    private Duration deltaTime = Duration.ZERO;
 
     public PlayFieldControl(InputHandler inputHandler, TetrominoHandler tetrominoHandler) {
         this.inputHandler = inputHandler;
@@ -35,10 +32,10 @@ public class PlayFieldControl {
     }
 
     public void updateGrid() {
-            this.grid.update(this.tetrominoHandler.getActiveTetromino());
-            if (this.grid.hasStopped()) {
-                tetrominoHandler.addNewBlock();
-            }
+        this.grid.update(this.tetrominoHandler.getActiveTetromino());
+        if (this.grid.hasStopped()) {
+            tetrominoHandler.addNewBlock();
+        }
 
     }
 
