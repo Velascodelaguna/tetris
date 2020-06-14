@@ -1,7 +1,6 @@
 package tetris.tetromino;
 
 import javafx.geometry.Point2D;
-import javafx.scene.Group;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
@@ -13,7 +12,6 @@ public class STetromino extends Tetromino {
     public STetromino() {
         this.type = TetrominoType.S;
         this.color = Color.GREEN;
-        this.group = new Group();
         this.position = new Point2D(PIXEL_SIZE*3, 0);
 
         initializeSquares();
@@ -41,7 +39,6 @@ public class STetromino extends Tetromino {
             }
 
             this.squares[i] = square;
-            group.getChildren().add(square);
         });
     }
 

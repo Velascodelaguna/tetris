@@ -1,9 +1,9 @@
 package tetris;
 
 import javafx.collections.ObservableList;
-import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.shape.Rectangle;
 import tetris.tetromino.Tetromino;
 import tetris.tetromino.TetrominoHandler;
 
@@ -40,9 +40,11 @@ public class PlayFieldView {
 
     private void addTetrominoToPane(Tetromino tetromino) {
         ObservableList<Node> paneChildren = this.pane.getChildren();
-        Group squares = tetromino.getGroup();
-        if (!paneChildren.contains(squares)) {
-            paneChildren.add(tetromino.getGroup());
+        Rectangle[] squares = tetromino.getSquares();
+        for (Rectangle square: squares) {
+            if (!paneChildren.contains(square)) {
+                paneChildren.add(square);
+            }
         }
     }
 }

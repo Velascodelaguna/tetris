@@ -18,7 +18,6 @@ public class ITetromino extends Tetromino {
     public ITetromino() {
         this.type = TetrominoType.I;
         this.color = Color.CYAN;
-        this.group = new Group();
         this.position = new Point2D(PIXEL_SIZE*3, 0);
         this.rotationCoordinates = new LinkedList<>();
         initializeSquares();
@@ -35,7 +34,6 @@ public class ITetromino extends Tetromino {
 
             square.setX(this.position.getX() + PIXEL_SIZE * i);
             this.squares[i] = square;
-            group.getChildren().add(square);
         });
     }
 

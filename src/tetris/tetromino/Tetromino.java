@@ -16,25 +16,13 @@ public abstract class Tetromino {
     protected TetrominoType type;
     protected Color color;
     protected Color borderColor = Color.DARKGRAY;
-    protected Group group;
     protected Point2D position;
-    // a tetromino rotates relative to its center position
-    protected Point2D center;
-    protected boolean isActive = true;
     protected int orientation = 0;
     protected Rectangle[] squares = new Rectangle[BLOCK_SIZE];
     protected LinkedList<Point2D[]> rotationCoordinates;
 
     abstract protected void initializeSquares();
     abstract protected void initializeRotationCoordinates();
-
-    public Group getGroup() {
-        return this.group;
-    }
-
-    public Point2D getPosition() {
-        return this.position;
-    }
 
     public Rectangle[] getSquares() {
         return this.squares;

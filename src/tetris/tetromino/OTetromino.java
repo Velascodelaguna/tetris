@@ -1,7 +1,6 @@
 package tetris.tetromino;
 
 import javafx.geometry.Point2D;
-import javafx.scene.Group;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
@@ -13,7 +12,6 @@ public class OTetromino extends Tetromino {
     public OTetromino() {
         this.type = TetrominoType.O;
         this.color = Color.YELLOW;
-        this.group = new Group();
 
         // start at the middle columns of the play field
         this.position = new Point2D(PIXEL_SIZE*4, 0);
@@ -44,7 +42,6 @@ public class OTetromino extends Tetromino {
             }
 
             squares[i] = square;
-            group.getChildren().add(square);
         });
 
     }
