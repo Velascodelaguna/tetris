@@ -11,10 +11,10 @@ public class PlayFieldControl {
     private final TetrominoHandler tetrominoHandler;
     private final Grid grid;
 
-    public PlayFieldControl(InputHandler inputHandler, TetrominoHandler tetrominoHandler) {
+    public PlayFieldControl(InputHandler inputHandler, TetrominoHandler tetrominoHandler, Grid grid) {
         this.inputHandler = inputHandler;
         this.tetrominoHandler = tetrominoHandler;
-        this.grid = new Grid();
+        this.grid = grid;
     }
 
     public void update() {
@@ -34,6 +34,7 @@ public class PlayFieldControl {
     public void updateGrid() {
         this.grid.update(this.tetrominoHandler.getActiveTetromino());
         if (this.grid.hasStopped()) {
+            grid.clearLines();
             tetrominoHandler.addNewBlock();
         }
 

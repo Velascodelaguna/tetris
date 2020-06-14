@@ -7,12 +7,15 @@ import javafx.scene.shape.Rectangle;
 import tetris.tetromino.Tetromino;
 import tetris.tetromino.TetrominoHandler;
 
+import java.util.List;
+
 public class PlayFieldView {
 
     private final AnchorPane pane;
     private final TetrominoHandler tetrominoHandler;
+    private final Grid grid;
 
-    public PlayFieldView(TetrominoHandler tetrominoHandler) {
+    public PlayFieldView(TetrominoHandler tetrominoHandler, Grid grid) {
         pane = new AnchorPane();
         pane.requestFocus();
         pane.setMaxHeight(800);
@@ -21,6 +24,7 @@ public class PlayFieldView {
 
         pane.setStyle("-fx-border-color: brown");
         this.tetrominoHandler = tetrominoHandler;
+        this.grid = grid;
     }
 
     public AnchorPane getView() {
@@ -36,6 +40,7 @@ public class PlayFieldView {
         if (tetromino != null && this.pane != null) {
             addTetrominoToPane(tetromino);
         }
+        clearLines();
     }
 
     private void addTetrominoToPane(Tetromino tetromino) {
@@ -45,6 +50,13 @@ public class PlayFieldView {
             if (!paneChildren.contains(square)) {
                 paneChildren.add(square);
             }
+        }
+    }
+
+    private void clearLines() {
+        List<Rectangle> linesToClear = grid.getLinesToClear();
+        if (linesToClear != null && !linesToClear.isEmpty()) {
+            this.pane.getChildren().removeAll(linesToClear);
         }
     }
 }

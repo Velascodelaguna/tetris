@@ -25,9 +25,10 @@ public class GameScreen {
         scene = new Scene(gameLayout, width, height);
         gameLayout.setAlignment(Pos.CENTER);
         tetrominoHandler = new TetrominoHandler();
-        playFieldView = new PlayFieldView(tetrominoHandler);
+        Grid grid = new Grid();
+        playFieldView = new PlayFieldView(tetrominoHandler, grid);
+        playFieldControl = new PlayFieldControl(new InputHandler(scene), tetrominoHandler, grid);
         sidePanelView = new SidePanelView(app);
-        playFieldControl = new PlayFieldControl(new InputHandler(scene), tetrominoHandler);
         gameLayout.getChildren().addAll(playFieldView.getView(), sidePanelView.getView());
         initializeGame();
     }

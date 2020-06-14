@@ -6,6 +6,10 @@ import tetris.tetromino.Tetromino;
 import javafx.geometry.Point2D;
 
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.stream.IntStream;
 
 // each position occupies a place in the grid
 // ex: the first 40 pixels in the x and y of the
@@ -42,9 +46,11 @@ public class Grid {
     Rectangle[][] grid;
     private GridSquare[] previousPosition;
     private boolean hasActiveTetrominoStopped = false;
+    final int NUM_ROWS = 20;
+    final int NUM_COLS = 10;
 
     public Grid() {
-        this.grid = new Rectangle[20][10];
+        this.grid = new Rectangle[NUM_ROWS][NUM_COLS];
     }
 
     public void update(Tetromino tetromino) {
@@ -63,7 +69,6 @@ public class Grid {
             this.hasActiveTetrominoStopped = false;
         }
 
-        clearLines();
     }
 
     public boolean hasStopped() {
@@ -86,8 +91,88 @@ public class Grid {
         }
     }
 
-    private void clearLines() {
+    private boolean isRowFull(Rectangle[] row) {
+        boolean isNull = true;
+        for (Rectangle currentSquare: row) {
+            isNull &= (currentSquare != null);
+        }
+        return isNull;
+    }
 
+    public List<Rectangle> getLinesToClear() {
+        return this.linesToClear;
+    }
+
+    private List<Rectangle> linesToClear;
+    private void findLinesToClear(List<Integer> rowIdsToClear) {
+        if (rowIdsToClear == null || rowIdsToClear.isEmpty()) return;
+
+        linesToClear = new LinkedList<>();
+        for (int i: rowIdsToClear) {
+            List<Rectangle> currentRow = Arrays.asList(grid[i]);
+            linesToClear.addAll(currentRow);
+        }
+    }
+
+    private List<Integer> findRowIdsToClear() {
+        List<Integer> rowIdsToClear = new LinkedList<>();
+
+        // iterate through the index from the bottom to top (index 19 to index 0)
+        IntStream.range(0, NUM_ROWS).forEach(i -> {
+            int idx = NUM_ROWS - i - 1;
+            Rectangle[] currentRow = grid[idx];
+
+            if (isRowFull(currentRow)) {
+                rowIdsToClear.add(idx);
+            }
+        });
+
+        return rowIdsToClear;
+    }
+
+    public void clearLines() {
+        List<Integer> rowIdsToClear = findRowIdsToClear();
+        findLinesToClear(rowIdsToClear);
+
+        if (!rowIdsToClear.isEmpty()) {
+
+            for (int rowId: rowIdsToClear) {
+                grid[rowId] = new Rectangle[NUM_COLS];
+            }
+
+            HashSet<Integer> rowIdsSetToClear = new HashSet<>(rowIdsToClear);
+            while (!rowIdsToClear.isEmpty()) {
+                int rowId = rowIdsToClear.get(0);
+                int lineCount = 0;
+
+                for (int currentRow = rowId; currentRow >= 0; currentRow--) {
+                    if (!rowIdsSetToClear.contains(currentRow)) {
+                        moveSquaresDown(currentRow, lineCount);
+                        break;
+                    } else {
+                        lineCount++;
+                        rowIdsToClear.remove(Integer.valueOf(currentRow));
+                    }
+                }
+            }
+        }
+    }
+
+    private void moveSquaresDown(int startRow, int numLines) {
+        if (numLines <= 0) return;
+
+        int changeY = numLines * Tetromino.PIXEL_SIZE;
+        for (int i = startRow; i >= 0; i--) {
+            Rectangle[] currentRow = this.grid[i];
+            this.grid[i + numLines] = currentRow;
+            this.grid[i] = new Rectangle[NUM_COLS];
+
+            for (Rectangle square: currentRow) {
+                if (square != null) {
+                    square.setY(square.getY() + changeY);
+                }
+            }
+        }
     }
 
     private GridSquare[] getGridSquares(Rectangle[] squares) {
@@ -161,6 +246,6 @@ public class Grid {
 
     // check the position to see if it is within the boundaries of the game and it is not already occupied
     private boolean isMoveable(int row, int col) {
-        return (row >= 0 && row < 20 && col >= 0 && col < 10 && grid[row][col] == null);
+        return (row >= 0 && row < NUM_ROWS && col >= 0 && col < NUM_COLS && grid[row][col] == null);
     }
 }
