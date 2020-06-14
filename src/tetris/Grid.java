@@ -248,4 +248,29 @@ public class Grid {
     private boolean isMoveable(int row, int col) {
         return (row >= 0 && row < NUM_ROWS && col >= 0 && col < NUM_COLS && grid[row][col] == null);
     }
+
+    public Point2D[] getHardDropCoordinates(Tetromino tetromino) {
+        GridPosition[] dropPositions = findDropPosition(tetromino);
+
+        return Arrays.stream(dropPositions)
+                .map(position -> new Point2D(position.col * Tetromino.PIXEL_SIZE,
+                                             position.row * Tetromino.PIXEL_SIZE))
+                .toArray(Point2D[]::new);
+    }
+
+    private GridPosition[] findDropPosition(Tetromino tetromino) {
+        GridPosition[] positions = getGridPositions(tetromino.getSquarePositions());
+        final int numRowsToMove = IntStream.range(1, NUM_ROWS).takeWhile(changeY ->
+                Arrays.stream(positions)
+                    .allMatch(position -> isMoveable(position.row + changeY, position.col)))
+                .max()
+                .orElse(0);
+
+        return Arrays.stream(positions)
+                .map(square -> {
+                    int gridRow = square.row + numRowsToMove;
+                    int gridCol = square.col;
+                    return new GridPosition(gridRow, gridCol);
+                }).toArray(GridPosition[]::new);
+    }
 }

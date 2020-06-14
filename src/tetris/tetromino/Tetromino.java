@@ -1,7 +1,6 @@
 package tetris.tetromino;
 
 import javafx.geometry.Point2D;
-import javafx.scene.Group;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
@@ -119,6 +118,15 @@ public abstract class Tetromino {
         } else if (rotation == Rotation.COUNTERCLOCKWISE) {
             this.rotate(this.getCoordinatesRotateCounterClockwise());
             this.orientation = this.getPreviousOrientation();
+        }
+    }
+
+    public void hardDrop(Point2D[] dropPositions) {
+        for (int i = 0; i < dropPositions.length; i++) {
+            Point2D newPosition = dropPositions[i];
+            Rectangle square = this.squares[i];
+            square.setX(newPosition.getX());
+            square.setY(newPosition.getY());
         }
     }
 }

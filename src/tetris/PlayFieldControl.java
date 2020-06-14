@@ -1,5 +1,6 @@
 package tetris;
 
+import javafx.geometry.Point2D;
 import javafx.scene.input.KeyCode;
 import tetris.tetromino.Tetromino;
 import tetris.tetromino.TetrominoHandler;
@@ -26,6 +27,7 @@ public class PlayFieldControl {
             case DOWN, K -> this.moveDown(currentActive);
             case X -> this.rotateClockwise(currentActive);
             case Z -> this.rotateCounterClockwise(currentActive);
+            case SPACE -> this.hardDrop(currentActive);
         }
 
         inputHandler.resetKeyPressed();
@@ -77,5 +79,10 @@ public class PlayFieldControl {
         if (this.grid.canRotateCounterClockwise(tetromino)) {
             tetromino.rotate(Tetromino.Rotation.COUNTERCLOCKWISE);
         }
+    }
+
+    private void hardDrop(Tetromino tetromino) {
+        Point2D[] hardDropCoordinates = grid.getHardDropCoordinates(tetromino);
+        tetromino.hardDrop(hardDropCoordinates);
     }
 }
