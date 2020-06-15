@@ -141,13 +141,14 @@ public class Grid {
             }
 
             HashSet<Integer> rowIdsSetToClear = new HashSet<>(rowIdsToClear);
+            int lineCount = 0;
             while (!rowIdsToClear.isEmpty()) {
                 int rowId = rowIdsToClear.get(0);
-                int lineCount = 0;
 
                 for (int currentRow = rowId; currentRow >= 0; currentRow--) {
                     if (!rowIdsSetToClear.contains(currentRow)) {
-                        moveSquaresDown(currentRow, lineCount);
+                        int endIdx = rowIdsToClear.isEmpty() ? -1 : rowIdsToClear.iterator().next();
+                        moveSquaresDown(currentRow, endIdx, lineCount);
                         break;
                     } else {
                         lineCount++;
@@ -158,11 +159,11 @@ public class Grid {
         }
     }
 
-    private void moveSquaresDown(int startRow, int numLines) {
+    private void moveSquaresDown(int startRow, int endRow, int numLines) {
         if (numLines <= 0) return;
 
         int changeY = numLines * Tetromino.PIXEL_SIZE;
-        for (int i = startRow; i >= 0; i--) {
+        for (int i = startRow; i > endRow; i--) {
             Rectangle[] currentRow = this.grid[i];
             this.grid[i + numLines] = currentRow;
             this.grid[i] = new Rectangle[NUM_COLS];
@@ -261,8 +262,8 @@ public class Grid {
     private GridPosition[] findDropPosition(Tetromino tetromino) {
         GridPosition[] positions = getGridPositions(tetromino.getSquarePositions());
         final int numRowsToMove = IntStream.range(1, NUM_ROWS).takeWhile(changeY ->
-                Arrays.stream(positions)
-                    .allMatch(position -> isMoveable(position.row + changeY, position.col)))
+                    Arrays.stream(positions)
+                        .allMatch(position -> isMoveable(position.row + changeY, position.col)))
                 .max()
                 .orElse(0);
 
