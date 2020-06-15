@@ -2,9 +2,12 @@ package tetris;
 
 import javafx.geometry.Point2D;
 import javafx.scene.input.KeyCode;
+import javafx.scene.shape.Rectangle;
 import tetris.tetromino.Tetromino;
 import tetris.tetromino.TetrominoHandler;
 import tetris.tetromino.TetrominoType;
+
+import java.util.List;
 
 public class PlayFieldControl {
 
@@ -33,13 +36,21 @@ public class PlayFieldControl {
         inputHandler.resetKeyPressed();
     }
 
-    public void updateGrid() {
+    public void updateGrid(boolean isAnimating) {
         this.grid.update(this.tetrominoHandler.getActiveTetromino());
-        if (this.grid.hasStopped()) {
-            grid.clearLines();
-            tetrominoHandler.addNewBlock();
+        if (this.grid.hasStopped() && !isAnimating) {
+            grid.findLinesToClear();
+            this.tetrominoHandler.addNewBlock();
         }
+    }
 
+    public void clearLines() {
+        this.grid.clearLines();
+    }
+
+    public boolean hasLinesToClear() {
+        List<Rectangle> squaresToClear = this.grid.getSquaresToClear();
+        return this.grid.hasStopped() && squaresToClear != null && !squaresToClear.isEmpty();
     }
 
     public void moveActiveTetrominoDown() {

@@ -60,12 +60,26 @@ public class GameScreen {
 
         // update every millisecond
         long MILLISEC_IN_SEC = 700;
-        if (delta.toMillis() > MILLISEC_IN_SEC) {
+        if (delta.toMillis() > MILLISEC_IN_SEC && !playFieldControl.hasLinesToClear()) {
             playFieldControl.moveActiveTetrominoDown();
-            playFieldControl.updateGrid();
+            boolean isAnimatingLines = playFieldView.isAnimating();
+            playFieldControl.updateGrid(isAnimatingLines);
             playFieldView.update();
             deltaTime = Instant.now();
         }
+
+        if (playFieldControl.hasLinesToClear()) {
+            long animationTime = 50;
+            if (delta.toMillis() > animationTime) {
+                playFieldView.animateLines();
+                deltaTime = Instant.now();
+            }
+            if (playFieldView.isDoneAnimatingLineClear()) {
+                playFieldView.clearLines();
+                playFieldControl.clearLines();
+            }
+        }
+
     }
 
 

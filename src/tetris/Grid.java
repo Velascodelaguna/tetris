@@ -99,19 +99,23 @@ public class Grid {
         return isNull;
     }
 
-    public List<Rectangle> getLinesToClear() {
-        return this.linesToClear;
+    public List<Rectangle> getSquaresToClear() {
+        return this.squaresToClear;
     }
 
-    private List<Rectangle> linesToClear;
+    private List<Rectangle> squaresToClear;
     private void findLinesToClear(List<Integer> rowIdsToClear) {
         if (rowIdsToClear == null || rowIdsToClear.isEmpty()) return;
 
-        linesToClear = new LinkedList<>();
+        squaresToClear = new LinkedList<>();
         for (int i: rowIdsToClear) {
             List<Rectangle> currentRow = Arrays.asList(grid[i]);
-            linesToClear.addAll(currentRow);
+            squaresToClear.addAll(currentRow);
         }
+    }
+
+    public void findLinesToClear() {
+        findLinesToClear(findRowIdsToClear());
     }
 
     private List<Integer> findRowIdsToClear() {
@@ -132,7 +136,6 @@ public class Grid {
 
     public void clearLines() {
         List<Integer> rowIdsToClear = findRowIdsToClear();
-        findLinesToClear(rowIdsToClear);
 
         if (!rowIdsToClear.isEmpty()) {
 
@@ -157,6 +160,8 @@ public class Grid {
                 }
             }
         }
+
+        this.squaresToClear = null;
     }
 
     private void moveSquaresDown(int startRow, int endRow, int numLines) {

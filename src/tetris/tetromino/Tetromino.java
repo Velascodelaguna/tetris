@@ -37,6 +37,10 @@ public abstract class Tetromino {
         return this.type;
     }
 
+    public Color getColor() {
+        return this.color;
+    }
+
     public void moveDown() {
         position = position.add(0, PIXEL_SIZE);
         this.update(0, PIXEL_SIZE);
