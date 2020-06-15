@@ -59,6 +59,10 @@ public class PlayFieldControl {
         return this.grid.hasStopped() && squaresToClear != null && !squaresToClear.isEmpty();
     }
 
+    public int numberOfLinesCleared() {
+        return this.grid.getNumberOfLinesCleared();
+    }
+
     public void moveActiveTetrominoDown() {
         Tetromino currentActive = this.tetrominoHandler.getActiveTetromino();
         moveDown(currentActive);

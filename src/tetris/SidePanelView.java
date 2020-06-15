@@ -15,37 +15,61 @@ public class SidePanelView {
     private final VBox vbox;
     private final SidePanelControl sidePanelControl;
     private final VBox nextBlockSection;
-    private final AnchorPane blockPreview;
+    private AnchorPane blockPreview;
+    private VBox levelSection;
+    private Label levelCount;
+    private VBox lineSection;
+    private Label lineCount;
 
     public SidePanelView(SidePanelControl sidePanelControl) {
         this.sidePanelControl = sidePanelControl;
         vbox = new VBox();
-        blockPreview = new AnchorPane();
-        blockPreview.setMinHeight(50);
-        blockPreview.setMinWidth(100);
         vbox.setFocusTraversable(false);
+
         nextBlockSection = new VBox();
         vbox.getChildren().add(nextBlockSection);
         addNextBlock();
+
+        levelSection = new VBox();
+        vbox.getChildren().add(levelSection);
+        addLevelCount();
+
+        lineSection = new VBox();
+        vbox.getChildren().add(lineSection);
+        addLineCount();
         addLabels();
         addButtons();
 
-        vbox.setPadding(new Insets(90,100,0,20));
+        vbox.setPadding(new Insets(90,20,0,20));
         vbox.setSpacing(20);
     }
 
     private void addNextBlock() {
         Label nextBlock = new Label("Next Block");
         nextBlock.setFont(new Font(20));
-        nextBlockSection.getChildren().addAll(nextBlock, blockPreview);
+        this.blockPreview = new AnchorPane();
+        this.blockPreview.setMinHeight(50);
+        this.blockPreview.setMinWidth(100);
+        this.nextBlockSection.getChildren().addAll(nextBlock, blockPreview);
+    }
+
+    private void addLevelCount() {
+        Label level = new Label("Level");
+        this.levelCount = new Label("1");
+        this.levelCount.setFont(new Font(20));
+        this.levelSection.getChildren().addAll(level, levelCount);
+    }
+
+    private void addLineCount() {
+        Label lines = new Label("Lines");
+        this.lineCount = new Label("0");
+        this.lineCount.setFont(new Font(20));
+        this.lineSection.getChildren().addAll(lines, lineCount);
     }
 
     private void addLabels() {
-
-        Label level = new Label("Level");
-        Label lines = new Label("Lines");
         Label score = new Label("Score");
-        vbox.getChildren().addAll(level, lines, score);
+        vbox.getChildren().addAll(score);
     }
 
     private void addButtons() {
@@ -81,5 +105,13 @@ public class SidePanelView {
         ObservableList<Node> children = this.blockPreview.getChildren();
         children.clear();
         children.addAll(squares);
+    }
+
+    public void updateLevel(int newLevel) {
+        this.levelCount.setText(String.valueOf(newLevel));
+    }
+
+    public void updateLineCount(int lineCount) {
+        this.lineCount.setText(String.valueOf(lineCount));
     }
 }

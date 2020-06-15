@@ -118,6 +118,10 @@ public class Grid {
         findLinesToClear(findRowIdsToClear());
     }
 
+    public int getNumberOfLinesCleared() {
+        return findRowIdsToClear().size();
+    }
+
     private List<Integer> findRowIdsToClear() {
         List<Integer> rowIdsToClear = new LinkedList<>();
 

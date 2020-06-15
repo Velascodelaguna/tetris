@@ -18,6 +18,8 @@ public class GameScreen {
     private final SidePanelView sidePanelView;
     private final TetrominoHandler tetrominoHandler;
     private Instant deltaTime;
+    private int level = 1;
+    private int linesCleared = 0;
 
     public GameScreen(TetrisAppControl app, int width, int height) {
         deltaTime = Instant.now();
@@ -61,7 +63,7 @@ public class GameScreen {
         playFieldControl.update();
 
         // update every millisecond
-        long MILLISEC_IN_SEC = 700;
+        long MILLISEC_IN_SEC = 750 - (this.level * 50);
         if (delta.toMillis() > MILLISEC_IN_SEC && !playFieldControl.hasLinesToClear()) {
             playFieldControl.moveActiveTetrominoDown();
             boolean isAnimatingLines = playFieldView.isAnimating();
@@ -80,6 +82,12 @@ public class GameScreen {
                 deltaTime = Instant.now();
             }
             if (playFieldView.isDoneAnimatingLineClear()) {
+                this.linesCleared += playFieldControl.numberOfLinesCleared();
+                this.sidePanelView.updateLineCount(this.linesCleared);
+                if (this.linesCleared / 10 >= this.level) {
+                    this.level++;
+                    this.sidePanelView.updateLevel(this.level);
+                }
                 playFieldView.clearLines();
                 playFieldControl.clearLines();
             }
