@@ -36,9 +36,15 @@ public class PlayFieldControl {
         inputHandler.resetKeyPressed();
     }
 
+    public boolean tetrominoHasStopped() {
+        return this.grid.hasStopped();
+    }
+
     public void updateGrid(boolean isAnimating) {
+        if (isAnimating) return;
+
         this.grid.update(this.tetrominoHandler.getActiveTetromino());
-        if (this.grid.hasStopped() && !isAnimating) {
+        if (this.grid.hasStopped()) {
             grid.findLinesToClear();
             this.tetrominoHandler.addNewBlock();
         }

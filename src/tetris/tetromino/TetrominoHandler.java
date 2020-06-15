@@ -42,6 +42,10 @@ public class TetrominoHandler {
         return this.activeTetromino;
     }
 
+    public Tetromino getNextTetromino() {
+        return this.tetrominoBatch.peek();
+    }
+
     public void addNewBlock() {
         tetrominoCount++;
         if (tetrominoBatch.isEmpty() || tetrominoCount == 7) {

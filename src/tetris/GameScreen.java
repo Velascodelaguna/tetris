@@ -28,7 +28,8 @@ public class GameScreen {
         Grid grid = new Grid();
         playFieldView = new PlayFieldView(tetrominoHandler, grid);
         playFieldControl = new PlayFieldControl(new InputHandler(scene), tetrominoHandler, grid);
-        sidePanelView = new SidePanelView(app);
+        SidePanelControl sidePanelControl = new SidePanelControl(app, tetrominoHandler);
+        sidePanelView = new SidePanelView(sidePanelControl);
         gameLayout.getChildren().addAll(playFieldView.getView(), sidePanelView.getView());
         initializeGame();
     }
@@ -43,6 +44,7 @@ public class GameScreen {
         // call on initialize so when the game
         // starts the tetris block is already created
         playFieldView.initialize();
+        sidePanelView.initialize();
     }
 
     public void gameLoopStart() {
@@ -65,6 +67,9 @@ public class GameScreen {
             boolean isAnimatingLines = playFieldView.isAnimating();
             playFieldControl.updateGrid(isAnimatingLines);
             playFieldView.update();
+            if (playFieldControl.tetrominoHasStopped()) {
+                sidePanelView.updateNextBlockPreview();
+            }
             deltaTime = Instant.now();
         }
 
