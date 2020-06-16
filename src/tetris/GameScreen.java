@@ -64,6 +64,11 @@ public class GameScreen {
 
         // update every millisecond
         long MILLISEC_IN_SEC = 750 - (this.level * 50);
+        if (playFieldControl.isHardDrop) {
+            playFieldControl.isHardDrop = false;
+            MILLISEC_IN_SEC = 0;
+        }
+
         if (delta.toMillis() > MILLISEC_IN_SEC && !playFieldControl.hasLinesToClear()) {
             playFieldControl.moveActiveTetrominoDown();
             boolean isAnimatingLines = playFieldView.isAnimating();
@@ -92,8 +97,5 @@ public class GameScreen {
                 playFieldControl.clearLines();
             }
         }
-
     }
-
-
 }

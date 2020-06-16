@@ -102,8 +102,11 @@ public class PlayFieldControl {
         }
     }
 
+    public boolean isHardDrop = false;
     private void hardDrop(Tetromino tetromino) {
+        isHardDrop = true;
         Point2D[] hardDropCoordinates = grid.getHardDropCoordinates(tetromino);
         tetromino.hardDrop(hardDropCoordinates);
+        this.grid.setHardDropOnGrid(tetromino);
     }
 }

@@ -43,6 +43,7 @@ public class TetrominoHandler {
     }
 
     public Tetromino getNextTetromino() {
+        if (tetrominoBatch.isEmpty()) generateTetrominoes();
         return this.tetrominoBatch.peek();
     }
 

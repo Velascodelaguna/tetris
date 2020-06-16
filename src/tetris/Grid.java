@@ -283,4 +283,9 @@ public class Grid {
                     return new GridPosition(gridRow, gridCol);
                 }).toArray(GridPosition[]::new);
     }
+
+    public void setHardDropOnGrid(Tetromino tetromino) {
+        GridSquare[] gridSquares = getGridSquares(tetromino.getSquares());
+        this.previousPosition = gridSquares;
+    }
 }
