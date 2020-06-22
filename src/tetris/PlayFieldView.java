@@ -2,9 +2,12 @@ package tetris;
 
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
 import tetris.tetromino.Tetromino;
 import tetris.tetromino.TetrominoHandler;
 
@@ -94,5 +97,18 @@ public class PlayFieldView {
 
     public boolean isAnimating() {
         return this.isAnimating;
+    }
+
+    public void showGameOver() {
+        VBox vbox = new VBox();
+        vbox.setStyle("-fx-background-color: #FFFFFF");
+        vbox.setMinHeight(150);
+        vbox.setMinWidth(175);
+        Label gameOver = new Label("GAME\nOVER");
+        gameOver.setFont(new Font(50));
+        AnchorPane.setLeftAnchor(vbox,100.0);
+        AnchorPane.setTopAnchor(vbox, 150.0);
+        vbox.getChildren().add(gameOver);
+        this.pane.getChildren().add(vbox);
     }
 }
