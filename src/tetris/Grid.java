@@ -288,4 +288,14 @@ public class Grid {
         GridSquare[] gridSquares = getGridSquares(tetromino.getSquares());
         this.previousPosition = gridSquares;
     }
+
+    public boolean hasOverlap(Tetromino tetromino) {
+        GridPosition[] positions = getGridPositions(tetromino.getSquarePositions());
+        boolean hasOverlap = false;
+        for (GridPosition position: positions) {
+            hasOverlap |= grid[position.row][position.col] != null;
+        }
+
+        return hasOverlap;
+    }
 }

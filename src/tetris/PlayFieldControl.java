@@ -109,4 +109,8 @@ public class PlayFieldControl {
         tetromino.hardDrop(hardDropCoordinates);
         this.grid.setHardDropOnGrid(tetromino);
     }
+
+    public boolean hasOverlap() {
+        return this.grid.hasOverlap(this.tetrominoHandler.getActiveTetromino());
+    }
 }

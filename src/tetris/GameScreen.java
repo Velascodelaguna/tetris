@@ -17,6 +17,8 @@ public class GameScreen {
     private final PlayFieldControl playFieldControl;
     private final SidePanelView sidePanelView;
     private final TetrominoHandler tetrominoHandler;
+    private AnimationTimer animationTimer;
+
     private Instant deltaTime;
     private int level = 1;
     private int linesCleared = 0;
@@ -50,12 +52,13 @@ public class GameScreen {
     }
 
     public void gameLoopStart() {
-        new AnimationTimer() {
+        animationTimer = new AnimationTimer() {
             @Override
             public void handle(long now) {
                 gameLoop();
             }
-        }.start();
+        };
+        animationTimer.start();
     }
 
     private void gameLoop() {
@@ -70,6 +73,11 @@ public class GameScreen {
         }
 
         if (delta.toMillis() > MILLISEC_IN_SEC && !playFieldControl.hasLinesToClear()) {
+            if (playFieldControl.hasOverlap()) {
+                this.animationTimer.stop();
+                playFieldView.showGameOver();
+                return;
+            }
             playFieldControl.moveActiveTetrominoDown();
             boolean isAnimatingLines = playFieldView.isAnimating();
             playFieldControl.updateGrid(isAnimatingLines);
